@@ -11,14 +11,102 @@ namespace Datos
     public class LibroDAO 
     {
         RHcontext contexto = new RHcontext();
+        
         public async Task<IEnumerable<LibroBean>> GetLibro(int id)
         {
             var context = contexto.CrearContext();
 
-            var resultado =  await context.Libro.Where(a => a.id_Libro == id || id == 0)
+            var resultado =  await context.Libro.Include(a=>a.Autor).Include(a => a.Editorial)
+                .Where(a => a.id_Libro == id || id == 0)
                 .OrderByDescending(a => a.id_Libro).ToListAsync();
 
             if(resultado == null)
+            {
+                return null;
+            }
+
+            return resultado.Select(a => new LibroBean
+            {
+                id = a.id_Libro,
+                id_autor = a.id_autor,
+                id_editorial = a.id_editorial,
+                titulo = a.titulo,
+                autor = a.Autor.nombre,
+                editorial = a.Editorial.nombre,
+                year = a.año.ToString(),
+                genero = a.genero,
+                numero_paginas= a.numero_paginas
+
+               
+            });
+        }
+        public async Task<IEnumerable<LibroBean>> GetLibroTexto(string texto)
+        {
+            var context = contexto.CrearContext();
+
+            var resultado = await context.Libro.Include(a => a.Autor).Include(a => a.Editorial)
+                .Where(a => a.titulo.Contains(texto))
+                .OrderByDescending(a => a.id_Libro).ToListAsync();
+
+            if (resultado == null)
+            {
+                return null;
+            }
+
+            return resultado.Select(a => new LibroBean
+            {
+                id = a.id_Libro,
+                id_autor = a.id_autor,
+                id_editorial = a.id_editorial,
+                titulo = a.titulo,
+                autor = a.Autor.nombre,
+                editorial = a.Editorial.nombre,
+                year = a.año.ToString(),
+                genero = a.genero,
+                numero_paginas = a.numero_paginas
+
+
+            });
+        }
+        public async Task<IEnumerable<LibroBean>> GetLibroAutor(string texto)
+        {
+            var context = contexto.CrearContext();
+
+            var resultado = await context.Libro.Include(a => a.Autor).Include(a => a.Editorial)
+                .Where(a => a.Autor.nombre.Contains(texto))
+                .OrderByDescending(a => a.id_Libro).ToListAsync();
+
+            if (resultado == null)
+            {
+                return null;
+            }
+
+            return resultado.Select(a => new LibroBean
+            {
+                id = a.id_Libro,
+                id_autor = a.id_autor,
+                id_editorial = a.id_editorial,
+                titulo = a.titulo,
+                autor = a.Autor.nombre,
+                editorial = a.Editorial.nombre,
+                year = a.año.ToString(),
+                genero = a.genero,
+                numero_paginas = a.numero_paginas
+
+
+            });
+        }
+        public async Task<IEnumerable<LibroBean>> GetLibroFecha(string finicial, string ffinal)
+        {
+            var context = contexto.CrearContext();
+            DateTime fechainicial = Convert.ToDateTime(finicial);
+            DateTime fechafinal = Convert.ToDateTime(ffinal);
+
+            var resultado = await context.Libro.Include(a => a.Autor).Include(a => a.Editorial)
+                .Where(c => c.año >= fechainicial && c.año <= fechafinal)
+                .OrderByDescending(a => a.id_Libro).ToListAsync();
+
+            if (resultado == null)
             {
             }
 
@@ -28,11 +116,13 @@ namespace Datos
                 id_autor = a.id_autor,
                 id_editorial = a.id_editorial,
                 titulo = a.titulo,
-                año = a.año,
+                autor = a.Autor.nombre,
+                editorial = a.Editorial.nombre,
+                year = a.año.ToString(),
                 genero = a.genero,
-                numero_paginas= a.numero_paginas
+                numero_paginas = a.numero_paginas
 
-               
+
             });
         }
         public async Task<bool> InsertLibro(LibroBean model)

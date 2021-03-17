@@ -20,6 +20,7 @@ namespace Datos
 
             if(resultado == null)
             {
+                return null;
             }
 
             return resultado.Select(a => new EditorialBean

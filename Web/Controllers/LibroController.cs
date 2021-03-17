@@ -18,7 +18,26 @@ namespace Web.Controllers
         [HttpGet("[action]/{id}")]
         public  Task<IEnumerable<LibroBean>> List([FromRoute] int id)
         {
+
             return libroBLL.ListLibro(id);
+        }
+        // GET: api/Libro/ListText/texto
+        [HttpGet("[action]/{Texto}")]
+        public Task<IEnumerable<LibroBean>> ListText([FromRoute] string Texto)
+        {
+            return libroBLL.ListLibroTexto(Texto);
+        }
+        // GET: api/Libro/ListAutor/texto
+        [HttpGet("[action]/{Texto}")]
+        public Task<IEnumerable<LibroBean>> ListAutor([FromRoute] string Texto)
+        {
+            return libroBLL.ListLibroAutor(Texto);
+        }
+        // GET: api/Libro/ListFecha/fechainical/fechafinal
+        [HttpGet("[action]/{finicial}/{ffinal}")]
+        public Task<IEnumerable<LibroBean>> ListFecha([FromRoute] string finicial, string ffinal)
+        {
+            return libroBLL.ListLibroFecha(finicial,ffinal);
         }
 
         // POST: api/Libro/Insert

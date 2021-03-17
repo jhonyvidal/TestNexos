@@ -11,7 +11,10 @@ namespace Beans
         public Nullable<int> id_autor { get; set; }
         public Nullable<int> id_editorial { get; set; }
         public string titulo { get; set; }
+        public string autor { get; set; }
+        public string editorial { get; set; }
         public Nullable<System.DateTime> año { get; set; }
+        public string year { get; set; }
         public string genero { get; set; }
         public Nullable<int> numero_paginas { get; set; }
 

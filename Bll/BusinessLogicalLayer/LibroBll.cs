@@ -15,6 +15,18 @@ namespace BLL
         { 
             return libroDal.GetLibro(id);
         }
+        public Task<IEnumerable<LibroBean>> ListLibroTexto(string Texto)
+        {
+            return libroDal.GetLibroTexto(Texto);
+        }
+        public Task<IEnumerable<LibroBean>> ListLibroAutor(string Texto)
+        {
+            return libroDal.GetLibroAutor(Texto);
+        }
+        public Task<IEnumerable<LibroBean>> ListLibroFecha(string finicial, string ffinal)
+        {
+            return libroDal.GetLibroFecha(finicial,ffinal);
+        }
         public  Task<bool> InsertLibro(LibroBean model)
         {
             return libroDal.InsertLibro(model);
