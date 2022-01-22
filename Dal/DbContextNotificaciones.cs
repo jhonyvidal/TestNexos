@@ -9,7 +9,7 @@ namespace Datos
         public GestionHumanaContext CrearContext()
         {
             var options = new DbContextOptionsBuilder<GestionHumanaContext>()
-            .UseSqlServer(@"data source=192.168.93.193,1433\\SQLEXPRESS;initial catalog=TestNexos;user id=sa;password=JXPr3ns42021;persist security info=True;")
+            .UseSqlServer(@"data source=192.168.93.193,1433\\SQLEXPRESS;initial catalog=PruebaSD;user id=sa;password=JXPr3ns42021;persist security info=True;")
             .Options;
             return  new GestionHumanaContext(options);
         }
@@ -28,10 +28,8 @@ namespace Datos
         {
             base.OnModelCreating(modelBuilder);
 
-           
-            modelBuilder.ApplyConfiguration(new autorMap());
-            modelBuilder.ApplyConfiguration(new editorialMap());
-            modelBuilder.ApplyConfiguration(new libroMap());
+
+            modelBuilder.ApplyConfiguration(new usuarioMap());
 
 
         }
@@ -43,10 +41,7 @@ namespace Datos
         }
         
         //INICIO ENTIDADES
-
-        public virtual DbSet<Autor> Autor { get; set; }
-        public virtual DbSet<Editorial> Editorial { get; set; }
-        public virtual DbSet<Libro> Libro { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
 
         //FIN ENTIDADES
     }
